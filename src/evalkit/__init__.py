@@ -5,3 +5,5 @@ and improve it by turning the prompt / architecture / agent / model "knobs."
 """
 
 __version__ = "0.0.1"
+
+__all__ = ["__version__"]
