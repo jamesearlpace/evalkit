@@ -1,5 +1,7 @@
 # evalkit
 
+[![CI](https://github.com/jamesearlpace/evalkit/actions/workflows/ci.yml/badge.svg)](https://github.com/jamesearlpace/evalkit/actions/workflows/ci.yml)
+
 > A reusable eval harness that ships *inside* AI accelerators — grade any AI app against a
 > test dataset, find out **where** it's failing, and improve it by turning a small set of knobs.
 
@@ -10,6 +12,16 @@ Most eval tools give you a *score*. This accelerator closes the loop: it ties ea
 **specific optimization action** (prompt, architecture, agent, or model) and re-measures the lift.
 It's packaged so a delivery team can drop it onto an app and get *"here's what's wrong and here's
 the knob to turn,"* not just a number.
+
+## What this demonstrates
+
+- A local-first eval workflow for RAG/chatbot apps: dataset → app call → evaluator scores → report.
+- Provider-aware design: deterministic evaluators work offline; LLM-as-judge can use OpenAI or
+  Azure OpenAI.
+- Failure analysis beyond averages: failed rows are grouped into failure modes with occurrence,
+  severity, impact, priority, and the likely optimization knob.
+- A concrete prompt-optimization loop: score candidate prompts on train, keep the best, then
+  measure the winner on a held-out split.
 
 ## The loop
 
@@ -69,6 +81,21 @@ The run writes both JSON and Markdown reports:
 ```text
 examples/rag_chatbot/reports/rag-chatbot-example.json
 examples/rag_chatbot/reports/rag-chatbot-example.md
+```
+
+Example report excerpt:
+
+```text
+Items: 2
+Mean score: 1.000
+
+Prompt Optimization
+- Baseline train score: 0.000
+- Best train score: 1.000
+- Lift: 1.000
+
+Best prompt:
+Answer the user using only the provided context. Use the exact policy wording when possible.
 ```
 
 ## Eval Spec

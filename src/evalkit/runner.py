@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from statistics import mean
 from typing import Any
 
@@ -161,7 +162,7 @@ def _build_payload(
 ) -> dict[str, Any]:
     payload: dict[str, Any] = {
         "run_name": spec.report.run_name,
-        "spec_path": str(spec.path),
+        "spec_path": _display_path(spec.path),
         "split": run.split_name,
         "summary": run.summary,
         "failure_modes": run.failure_modes,
@@ -170,3 +171,10 @@ def _build_payload(
     if prompt_result is not None:
         payload["prompt_optimization"] = prompt_result.to_dict()
     return payload
+
+
+def _display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(Path.cwd()))
+    except ValueError:
+        return str(path)
