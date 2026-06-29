@@ -24,3 +24,7 @@ evalkit = "evalkit.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/evalkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,4 @@
+{"id":"password","input":"How do I reset my password?","expected_output":"Use the account portal reset link.","context":"Account access policy: users reset passwords with the reset link in the account portal."}
+{"id":"support-hours","input":"When is support available?","expected_output":"Support is available from 6 a.m. to 6 p.m. Pacific, Monday through Friday.","context":"Support coverage: agents are available from 6 a.m. to 6 p.m. Pacific, Monday through Friday."}
+{"id":"refunds","input":"How long do refunds take?","expected_output":"Refunds are processed within five business days after approval.","context":"Billing policy: approved refunds are processed within five business days after approval."}
+{"id":"delete-account","input":"Where can customers delete their account?","expected_output":"Customers can request account deletion from the privacy dashboard.","context":"Privacy policy: customers can request account deletion from the privacy dashboard."}

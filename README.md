@@ -3,7 +3,8 @@
 > A reusable eval harness that ships *inside* AI accelerators — grade any AI app against a
 > test dataset, find out **where** it's failing, and improve it by turning a small set of knobs.
 
-**Status:** 🚧 Early development (v1 in progress). Greenfield.
+**Status:** Early v1. The local CLI can load a dataset, run a pluggable app, score outputs,
+cluster failures, write reports, and demonstrate a prompt-optimization loop.
 
 Most eval tools give you a *score*. This accelerator closes the loop: it ties each score to a
 **specific optimization action** (prompt, architecture, agent, or model) and re-measures the lift.
@@ -50,18 +51,89 @@ Don't build a bespoke eval per app. Find the single capability that most improve
 
 ## Quickstart
 
-> Coming with M6. Target experience:
-
 ```bash
 pip install -e .
-cp .env.example .env   # add your OpenAI / Azure OpenAI key
 evalkit run examples/rag_chatbot/spec.yaml
 ```
 
-## Roadmap (v1)
+The bundled `examples/rag_chatbot` run uses deterministic scoring and does **not** require an API
+key. LLM-as-judge evaluators do require OpenAI or Azure OpenAI configuration:
 
-Built in milestones — scaffold → dataset/splits → app-under-test + LLM client → evaluators →
-report + failure-mode clustering → prompt-optimizer knob → runnable example → docs polish.
+```bash
+cp .env.example .env
+# Fill OPENAI_API_KEY or AZURE_OPENAI_* values, then reference an llm block in your spec.
+```
+
+The run writes both JSON and Markdown reports:
+
+```text
+examples/rag_chatbot/reports/rag-chatbot-example.json
+examples/rag_chatbot/reports/rag-chatbot-example.md
+```
+
+## Eval Spec
+
+A spec defines the dataset, app under test, evaluators, split policy, reporting, and optional prompt
+optimizer:
+
+```yaml
+dataset:
+  path: dataset.jsonl
+  format: jsonl
+
+split:
+  seed: 7
+  target: test
+  ratios:
+    train: 0.5
+    test: 0.5
+
+app:
+  type: callable
+  ref: app:answer
+  working_dir: .
+  params:
+    prompt: Answer the user helpfully.
+
+evaluators:
+  - type: exact_match
+    name: exact_answer
+
+prompt_optimization:
+  enabled: true
+  app_param: prompt
+  base_prompt: Answer the user helpfully.
+  candidates:
+    - Answer the user using only the provided context.
+```
+
+Datasets can be CSV or JSONL with `input`, `expected_output`, and optional `context`. Common aliases
+like `question` and `answer` are accepted.
+
+Apps can be:
+
+- `callable`: a local `module:function` or `path.py:function`.
+- `http`: a JSON HTTP endpoint that receives `input`, `question`, `context`, `metadata`, and app
+  params.
+
+Evaluators currently include:
+
+- `exact_match`
+- `regex_match`
+- `json_field_match`
+- `llm_judge` (`correctness`, `relevance`, `groundedness`, or any named criterion)
+
+## Development
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+## Roadmap
+
+Built in milestones: scaffold, dataset/splits, app-under-test + LLM client, evaluators, report +
+failure-mode clustering, prompt-optimizer knob, runnable example, docs polish.
 
 **Definition of done for v1:** clone the repo, run the example with your own API key, and get a
 report that says *"here's where your chatbot fails, clustered by failure mode, and here's the

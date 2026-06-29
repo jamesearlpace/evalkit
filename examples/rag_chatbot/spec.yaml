@@ -1,0 +1,40 @@
+dataset:
+  path: dataset.jsonl
+  format: jsonl
+
+split:
+  seed: 7
+  target: test
+  ratios:
+    train: 0.5
+    test: 0.5
+
+app:
+  type: callable
+  ref: app:answer
+  working_dir: .
+  params:
+    prompt: Answer the user helpfully.
+
+evaluators:
+  - type: exact_match
+    name: exact_answer
+    case_sensitive: false
+
+prompt_optimization:
+  enabled: true
+  app_param: prompt
+  base_prompt: Answer the user helpfully.
+  num_variants: 4
+  train_split: train
+  eval_split: test
+  candidates:
+    - Answer the user using only the provided context. Use the exact policy wording when possible.
+    - Ground the answer in context and keep it concise.
+
+report:
+  run_name: rag-chatbot-example
+  output_dir: reports
+  formats:
+    - json
+    - markdown
