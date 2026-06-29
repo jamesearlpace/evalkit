@@ -1,0 +1,36 @@
+# --- Secrets & local config (NEVER commit) ---
+.env
+.env.*
+!.env.example
+secrets*
+*.local.*
+
+# --- Internal-only working docs (reference material, not for the public repo) ---
+CODEX-BRIEF.md
+eval-accelerator-journey.md
+
+# --- Data (bring your own; keep ground-truth/customer data out of git) ---
+data/
+*.ground-truth.*
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Reports / run outputs ---
+reports/
+runs/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
