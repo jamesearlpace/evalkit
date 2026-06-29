@@ -1,4 +1,4 @@
-# Eval Accelerator
+# evalkit
 
 > A reusable eval harness that ships *inside* AI accelerators — grade any AI app against a
 > test dataset, find out **where** it's failing, and improve it by turning a small set of knobs.
@@ -55,7 +55,7 @@ Don't build a bespoke eval per app. Find the single capability that most improve
 ```bash
 pip install -e .
 cp .env.example .env   # add your OpenAI / Azure OpenAI key
-evalacc run examples/rag_chatbot/spec.yaml
+evalkit run examples/rag_chatbot/spec.yaml
 ```
 
 ## Roadmap (v1)

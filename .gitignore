@@ -7,7 +7,7 @@ secrets*
 
 # --- Internal-only working docs (reference material, not for the public repo) ---
 CODEX-BRIEF.md
-eval-accelerator-journey.md
+evalkit-journey.md
 
 # --- Data (bring your own; keep ground-truth/customer data out of git) ---
 data/

@@ -1,6 +1,6 @@
-"""Command-line entry point for eval-accelerator.
+"""Command-line entry point for evalkit.
 
-This is a stub. The full CLI (`evalacc run <spec.yaml>`) is built in milestone M0+.
+This is a stub. The full CLI (`evalkit run <spec.yaml>`) is built in milestone M0+.
 See the design spec for the planned command surface.
 """
 
@@ -14,10 +14,10 @@ from . import __version__
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="evalacc",
-        description="Eval Accelerator — grade an AI app, cluster its failures, turn a knob, re-measure.",
+        prog="evalkit",
+        description="evalkit — grade an AI app, cluster its failures, turn a knob, re-measure.",
     )
-    parser.add_argument("--version", action="version", version=f"eval-accelerator {__version__}")
+    parser.add_argument("--version", action="version", version=f"evalkit {__version__}")
 
     sub = parser.add_subparsers(dest="command")
     run = sub.add_parser("run", help="Run an eval spec (not yet implemented).")
@@ -30,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "run":
-        print(f"`evalacc run {args.spec}` is not implemented yet — see the roadmap. (M0)")
+        print(f"`evalkit run {args.spec}` is not implemented yet — see the roadmap. (M0)")
         return 0
 
     parser.print_help()

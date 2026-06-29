@@ -1,4 +1,4 @@
-"""eval-accelerator: a reusable eval harness for AI accelerators.
+"""evalkit: a reusable eval harness for AI accelerators.
 
 Grade an app against a test dataset, cluster its failures into failure modes,
 and improve it by turning the prompt / architecture / agent / model "knobs."
